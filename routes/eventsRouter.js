@@ -2,11 +2,11 @@ const express = require("express");
 const router = express.Router();
 const eventModel = require("../models/eventModel");
 const roleCheck = require("../middlewares/roleChecker");
+const isLoggedIn = require('../middlewares/isLoggedin')
 
-router.post('/create', roleCheck('event_manager'), async function (req, res){
+router.post('/create',isLoggedIn,roleCheck("event manager"), async function (req, res){
     try {
         const { title, description, location, date, category } = req.body;
-        
         const createdEvent = await eventModel.create({
             title,
             description,
@@ -23,7 +23,7 @@ router.post('/create', roleCheck('event_manager'), async function (req, res){
     }
 });
 
-router.put('/update/:id', roleCheck('event_manager'), async function(req, res){
+router.put('/update/:id', roleCheck('event manager'),isLoggedIn, async function(req, res){
     try {
         const eventId = req.params.id;
         const updateData = req.body;
@@ -40,7 +40,7 @@ router.put('/update/:id', roleCheck('event_manager'), async function(req, res){
     }
 });
 
-router.delete('/delete/:id', roleCheck('admin'), async function(req, res){
+router.delete('/delete/:id', roleCheck('admin'),isLoggedIn, async function(req, res){
     try {
         const eventId = req.params.id;
 

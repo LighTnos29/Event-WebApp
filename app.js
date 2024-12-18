@@ -21,5 +21,5 @@ app.use(flash())
 // }))
 
 app.use('/events',eventRoute)
-app.use('/users',userRouter)
+app.use('/user',userRouter)
 app.listen(3000)
